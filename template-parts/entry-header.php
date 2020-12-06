@@ -13,8 +13,6 @@ if ( is_singular() ) {
 	$entry_header_classes .= ' header-footer-group';
 }
 
-$studycats = $terms = get_the_terms(get_the_ID(), 'studynotecat');
-
 ?>
 
 <header class="entry-header has-text-align-center<?php echo esc_attr( $entry_header_classes ); ?>">
@@ -31,17 +29,13 @@ $studycats = $terms = get_the_terms(get_the_ID(), 'studynotecat');
 		 */
 		$show_categories = apply_filters( 'twentytwenty_show_categories_in_entry_header', true );
 
-		if ( true === $show_categories && ! empty($studycats) ) {
+		if ( true === $show_categories && has_category() ) {
 			?>
 
 			<div class="entry-categories">
-				<span class="screen-reader-text"><?php _e( 'Study Categories', 'mdtwentytwentychild' ); ?></span>
+				<span class="screen-reader-text"><?php _e( 'Categories', 'twentytwenty' ); ?></span>
 				<div class="entry-categories-inner">
-					<?php foreach( $studycats as $cat ) : ?>
-						<a href="<?php echo get_term_link($cat); ?>" rel="category tag">
-							<?php echo wp_kses_post($cat->name); ?>
-						</a>
-					<?php endforeach; ?>
+					<?php the_category( ' ' ); ?>
 				</div><!-- .entry-categories-inner -->
 			</div><!-- .entry-categories -->
 
@@ -66,7 +60,7 @@ $studycats = $terms = get_the_terms(get_the_ID(), 'studynotecat');
 			?>
 
 			<div class="intro-text section-inner max-percentage<?php echo $intro_text_width; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?>">
-				<?php the_excerpt(); ?>
+				<?php // the_excerpt(); ?>
 			</div>
 
 			<?php
